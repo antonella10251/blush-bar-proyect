@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blush Bar - Maquillaje</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='blush.css')}}">
+  <!-- Enlace a FontAwesome para el icono del carrito -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <h1 class="logo">Blush Bar</h1>
+      <nav>
+        <ul>
+          <li><a href="#">Maquillaje</a></li>
+          <li><a href="#">Skincare</a></li>
+          <li><a href="#">Ofertas</a></li>
+          <li><a href="#">Sobre Nosotros</a></li>
+          <li><a href="#">mi cuenta</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!-- Modal del Carrito -->
+  <div id="cart-modal" class="cart-modal">
+    <div class="cart-content">
+      <span class="close" onclick="toggleCart()">&times;</span>
+      <h2>Tu Carrito</h2>
+      <div id="cart-items">
+        <!-- Los elementos del carrito se agregarán aquí dinámicamente -->
+      </div>
+      <div class="cart-total">
+        <h3>Total: $<span id="total-price">0.00</span></h3>
+        <button class="btn" onclick="checkout()">Finalizar Compra</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="carousel">
+      <div class="carousel-slide">
+        <div class="carusel-body pink">
+          <h1 class="carousel-text">Tu Belleza, Nuestra Pasión</h1>
+          <img src="{{url_for('static' , filename = 'img/slide1.webp')}}" alt="Slide 1">
+        </div>
+        <div class="carusel-body orange">
+          <h1 class="carousel-text">Productos de Calidad</h1>
+          <img src="{{url_for('static' , filename = 'img/slide2.gif')}}" alt="Slide 1">
+        </div>
+        <div class="carusel-body yellow">
+          <h1 class="carousel-text">Maquillaje Exclusivo</h1>
+          <img src="{{url_for('static' , filename = 'img/slide3.webp')}}" alt="Slide 1">
+        </div>
+      </div>
+      <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+      <button class="next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+  </section>
+
+  <!-- Primera sección de productos como carrusel -->
+  <section class="productos-carousel">
+    <div class="container">
+      <h3>Nuestros Productos</h3>
+      <div class="carousel-productos">
+        <div class="carousel-slide-productos">
+          <div class="producto">
+            <img src="https://via.placeholder.com/300" alt="Producto 1">
+            <h4>Base de Maquillaje</h4>
+            <p>$29.99</p>
+          </div>
+          <div class="producto">
+            <img src="https://via.placeholder.com/300" alt="Producto 2">
+            <h4>Lipstick Mate</h4>
+            <p>$15.99</p>
+          </div>
+          <div class="producto">
+            <img src="https://via.placeholder.com/300" alt="Producto 3">
+            <h4>Paleta de Sombras</h4>
+            <p>$39.99</p>
+          </div>
+          <div class="producto">
+            <img src="https://via.placeholder.com/300" alt="Producto 4">
+            <h4>Rímel Voluminizador</h4>
+            <p>$19.99</p>
+          </div>
+        </div>
+      </div>
+      <button class="prev-producto" onclick="moveProductoSlide(-1)">&#10094;</button>
+      <button class="next-producto" onclick="moveProductoSlide(1)">&#10095;</button>
+    </div>
+  </section>
+
+  <!-- Segunda sección de productos (nueva) -->
+  <section class="productos-nuevos">
+    <div class="container">
+      <h3>Nuevas Colecciones</h3>
+      <div class="nuevos-grid">
+        <div class="nuevo-producto">
+          <img src="https://via.placeholder.com/300" alt="Producto 4">
+          <h4>Labial Líquido</h4>
+          <p>$19.99</p>
+          <button>Comprar</button>
+        </div>
+        <div class="nuevo-producto">
+          <img src="https://via.placeholder.com/300" alt="Producto 5">
+          <h4>Iluminador</h4>
+          <p>$24.99</p>
+          <button>Comprar</button>
+        </div>
+        <div class="nuevo-producto">
+          <img src="https://via.placeholder.com/300" alt="Producto 6">
+          <h4>Delineador en Gel</h4>
+          <p>$12.99</p>
+          <button>Comprar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Blush Bar - Todos los derechos reservados</p>
+      <nav>
+        <ul>
+          <li><a href="#">Política de Privacidad</a></li>
+          <li><a href="#">Términos de Servicio</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // Carrusel principal
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.carusel-body');
+
+    function moveSlide(n) {
+      slideIndex += n;
+      if (slideIndex >= slides.length) slideIndex = 0;
+      if (slideIndex < 0) slideIndex = slides.length - 1;
+      document.querySelector('.carousel-slide').style.transform = `translateX(${-slideIndex * 100 / slides.length}%)`;
+    }
+
+    // Carrusel de productos
+    let productoSlideIndex = 0;
+    const productoSlides = document.querySelectorAll('.carousel-slide-productos .producto');
+    const totalProductos = productoSlides.length;
+
+    function moveProductoSlide(n) {
+      productoSlideIndex += n;
+      if (productoSlideIndex >= totalProductos) productoSlideIndex = 0;
+      if (productoSlideIndex < 0) productoSlideIndex = totalProductos - 1;
+      document.querySelector('.carousel-slide-productos').style.transform = `translateX(${-productoSlideIndex * 100 / slides.length}%)`;
+    }
+  </script>
+  <script src="{{url_for('static', filename='blush.js')}}"></script>
+</body>
+
+</html
